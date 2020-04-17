@@ -1,0 +1,22 @@
+{
+  "name": "begin-guide-react",
+  "version": "1.0.0",
+  "description": "The Beginner's Guide to React - https://egghead.io/courses/the-beginner-s-guide-to-react",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/FelipeEnne/Begin-Guide-React.git"
+  },
+  "keywords": [
+    "react"
+  ],
+  "author": "Felipe Enne",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/FelipeEnne/Begin-Guide-React/issues"
+  },
+  "homepage": "https://github.com/FelipeEnne/Begin-Guide-React#readme"
+}
