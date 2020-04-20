@@ -16,24 +16,18 @@
 
     const rootElement = document.getElementById('root');
         
-    function CharacterCount({text}) {
-      return (
-        <div>
-          {`The text "${text}" has `}
-          {text.length ? <strong>{text.length}</strong> : 'No'}
-          {' characters'}
-        </div>
+    function tick() {
+      const time = new Date().toLocaleTimeString()
+      const element = (
+        <>
+          <input value={time} />
+          <input value={time} />
+        </>
       )
+      ReactDOM.render(element, rootElement)
     }
 
-    const element = (
-      <>
-        <CharacterCount text="Hello World" />
-        <CharacterCount text="" />
-      </>
-    )
-    
-    ReactDOM.render(element,rootElement)
+    setInterval(tick, 1000)
 
         
     </script>
