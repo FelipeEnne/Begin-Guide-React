@@ -11,12 +11,16 @@
     <script src="https://unpkg.com/react-dom@16.12.0/umd/react-dom.development.js"></script>
     <script src="https://unpkg.com/@babel/standalone@7.8.3/babel.js"></script>
     <script type="text/babel">
+
         const rootElement = document.getElementById('root');
-        // const element = React.createElement('div',{
-        //     children: 'hello word',
-        //     className: 'container'
-        // })
-        const element = <div className="container">Hello</div>
+        
+        const children = 'hello word';
+        const myclassName = 'container';
+
+        const element = <React.Fragment>
+            <span>hello</span> <span>word</span>    
+        </React.Fragment>
+        
         ReactDOM.render(element,rootElement)
 
         
