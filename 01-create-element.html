@@ -16,16 +16,22 @@
 
     const rootElement = document.getElementById('root');
         
-    function SayHello({firstName, lastName}) {
-        return(
-            <div>hello {firstName} {lastName} </div>
-        )
+    function CharacterCount({text}) {
+      return (
+        <div>
+          {`The text "${text}" has `}
+          {text.length ? <strong>{text.length}</strong> : 'No'}
+          {' characters'}
+        </div>
+      )
     }
 
-    SayHello.propTypes = {
-        firstName: PropTypes.string.isRequired,
-        lastName: PropTypes.string.isRequired,
-    }
+    const element = (
+      <>
+        <CharacterCount text="Hello World" />
+        <CharacterCount text="" />
+      </>
+    )
 
     const element = <SayHello firstName={false} />
     
