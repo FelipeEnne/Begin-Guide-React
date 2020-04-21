@@ -36,41 +36,21 @@
 
     <script type="text/babel">
 
-    const state = {eventCount: 0, username: ''}
-
-    function App() {
-      function handleClick() {
-        setState({eventCount: state.eventCount + 1})
-      }
-
-      function handleChange(event) {
-        setState({username: event.target.value})
-      }
-
+    function Greeting() {
+      const [name, setName] = React.useState('')
+      const handleChange = event => setName(event.target.value)
       return (
         <div>
-          <p>There have been {state.eventCount} events.</p>
-          <p>
-            <button onClick={handleClick}>Click Me</button>
-          </p>
-          <p>You typed: {state.username}</p>
-          <p>
-            <input onChange={handleChange} />
-          </p>
+          <form>
+            <label htmlFor="name">Name: </label>
+            <input onChange={handleChange} id="name" />
+          </form>
+          {name ? <strong>Hello {name}</strong> : 'Please type your name'}
         </div>
       )
     }
 
-    function setState(newState) {
-      Object.assign(state, newState)
-      renderApp()
-    }
-
-    function renderApp() {
-      ReactDOM.render(<App />, document.getElementById('root'))
-    }
-
-    renderApp()
+    ReactDOM.render(<Greeting />, document.getElementById('root'))
 
         
     </script>
