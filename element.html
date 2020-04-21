@@ -3,89 +3,120 @@
   <script src="https://unpkg.com/react@16.12.0/umd/react.development.js"></script>
   <script src="https://unpkg.com/react-dom@16.12.0/umd/react-dom.development.js"></script>
   <script src="https://unpkg.com/@babel/standalone@7.8.3/babel.js"></script>
-  <script src="https://unpkg.com/vanilla-tilt@1.7.0/dist/vanilla-tilt.min.js"></script>
-  <style>
-    /*
-    Taken from the vanilla-tilt.js demo site:
-    https://micku7zu.github.io/vanilla-tilt.js/index.html
-    */
-    .tilt-root {
-      height: 150px;
-      background-color: red;
-      width: 200px;
-      background-image: -webkit-linear-gradient(
-        315deg,
-        #ff00ba 0%,
-        #fae713 100%
-      );
-      background-image: linear-gradient(135deg, #ff00ba 0%, #fae713 100%);
-      transform-style: preserve-3d;
-      will-change: transform;
-      transform: perspective(1000px) rotateX(0deg) rotateY(0deg)
-        scale3d(1, 1, 1);
-    }
-    .tilt-child {
-      position: absolute;
-      width: 50%;
-      height: 50%;
-      top: 50%;
-      left: 50%;
-      transform: translateZ(30px) translateX(-50%) translateY(-50%);
-      box-shadow: 0 0 50px 0 rgba(51, 51, 51, 0.3);
-      background-color: white;
-    }
-    .totally-centered {
-      width: 100%;
-      height: 100%;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
-  </style>
   <script type="text/babel">
-    function Tilt({children}) {
-      const tiltRef = React.useRef()
+    // https://github.com/donavon/hook-flow
+
+    function Child() {
+      console.log('%c    Child: render start', 'color: MediumSpringGreen')
+
+      const [count, setCount] = React.useState(() => {
+        console.log('%c    Child: useState callback', 'color: tomato')
+        return 0
+      })
 
       React.useEffect(() => {
-        const tiltNode = tiltRef.current
-        const vanillaTiltOptions = {
-          max: 25,
-          speed: 400,
-          glare: true,
-          'max-glare': 0.5,
-        }
-        VanillaTilt.init(tiltNode, vanillaTiltOptions)
+        console.log('%c    Child: useEffect no deps', 'color: LightCoral')
         return () => {
-          tiltNode.vanillaTilt.destroy()
+          console.log(
+            '%c    Child: useEffect no deps cleanup',
+            'color: LightCoral',
+          )
+        }
+      })
+
+      React.useEffect(() => {
+        console.log(
+          '%c    Child: useEffect empty deps',
+          'color: MediumTurquoise',
+        )
+        return () => {
+          console.log(
+            '%c    Child: useEffect empty deps cleanup',
+            'color: MediumTurquoise',
+          )
         }
       }, [])
 
-      return (
-        <div ref={tiltRef} className="tilt-root">
-          <div className="tilt-child">{children}</div>
-        </div>
+      React.useEffect(() => {
+        console.log('%c    Child: useEffect with dep', 'color: HotPink')
+        return () => {
+          console.log(
+            '%c    Child: useEffect with dep cleanup',
+            'color: HotPink',
+          )
+        }
+      }, [count])
+
+      const element = (
+        <button onClick={() => setCount(previousCount => previousCount + 1)}>
+          {count}
+        </button>
       )
+
+      console.log('%c    Child: render end', 'color: MediumSpringGreen')
+
+      return element
     }
 
     function App() {
-      const [showTilt, setShowTilt] = React.useState(true)
-      return (
-        <div>
+      console.log('%cApp: render start', 'color: MediumSpringGreen')
+
+      const [showChild, setShowChild] = React.useState(() => {
+        console.log('%cApp: useState callback', 'color: tomato')
+        return false
+      })
+
+      React.useEffect(() => {
+        console.log('%cApp: useEffect no deps', 'color: LightCoral')
+        return () => {
+          console.log('%cApp: useEffect no deps cleanup', 'color: LightCoral')
+        }
+      })
+
+      React.useEffect(() => {
+        console.log('%cApp: useEffect empty deps', 'color: MediumTurquoise')
+        return () => {
+          console.log(
+            '%cApp: useEffect empty deps cleanup',
+            'color: MediumTurquoise',
+          )
+        }
+      }, [])
+
+      React.useEffect(() => {
+        console.log('%cApp: useEffect with dep', 'color: HotPink')
+        return () => {
+          console.log('%cApp: useEffect with dep cleanup', 'color: HotPink')
+        }
+      }, [showChild])
+
+      const element = (
+        <>
           <label>
             <input
               type="checkbox"
-              checked={showTilt}
-              onChange={e => setShowTilt(e.target.checked)}
+              checked={showChild}
+              onChange={e => setShowChild(e.target.checked)}
             />{' '}
-            show tilt
+            show child
           </label>
-          {showTilt ? (
-            <Tilt>
-              <div className="totally-centered">vanilla-tilt.js</div>
-            </Tilt>
-          ) : null}
-        </div>
+          <div
+            style={{
+              padding: 10,
+              margin: 10,
+              height: 30,
+              width: 30,
+              border: 'solid',
+            }}
+          >
+            {showChild ? <Child /> : null}
+          </div>
+        </>
       )
+
+      console.log('%cApp: render end', 'color: MediumSpringGreen')
+
+      return element
     }
 
     ReactDOM.render(<App />, document.getElementById('root'))
