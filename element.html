@@ -36,33 +36,41 @@
 
     <script type="text/babel">
 
-    function Box({style, size, className = '', ...rest}) {
-      const sizeClassName = size ? `box--${size}` : ''
+    const state = {eventCount: 0, username: ''}
+
+    function App() {
+      function handleClick() {
+        setState({eventCount: state.eventCount + 1})
+      }
+
+      function handleChange(event) {
+        setState({username: event.target.value})
+      }
+
       return (
-        <div
-          className={`box ${className} ${sizeClassName}`}
-          style={{fontStyle: 'italic', ...style}}
-          {...rest}
-        />
+        <div>
+          <p>There have been {state.eventCount} events.</p>
+          <p>
+            <button onClick={handleClick}>Click Me</button>
+          </p>
+          <p>You typed: {state.username}</p>
+          <p>
+            <input onChange={handleChange} />
+          </p>
+        </div>
       )
     }
 
-    const element = (
-      <div>
-        <Box size="small" style={{backgroundColor: 'lightblue'}}>
-          small lightblue box
-        </Box>
-        <Box size="medium" style={{backgroundColor: 'pink'}}>
-          medium pink box
-        </Box>
-        <Box size="large" style={{backgroundColor: 'orange'}}>
-          large orange box
-        </Box>
-        <Box>sizeless box</Box>
-      </div>
-    )
+    function setState(newState) {
+      Object.assign(state, newState)
+      renderApp()
+    }
 
-    ReactDOM.render(element, document.getElementById('root'))
+    function renderApp() {
+      ReactDOM.render(<App />, document.getElementById('root'))
+    }
+
+    renderApp()
 
         
     </script>
